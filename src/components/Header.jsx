@@ -5,11 +5,13 @@ import { AnimatePresence, motion } from 'framer-motion';
 import ReservationForm from './ReservationForm';
 import MobileMenu from './MobileMenu';
 import { useMagnetic } from '../hooks/useMagnetic';
+import { supabase } from '../lib/supabaseClient';
 
 export default function Header({ isLoaded }) {
     const [scrolled, setScrolled] = useState(false);
     const [showReserve, setShowReserve] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [user, setUser] = useState(null);
     const magneticBuyRef = useMagnetic();
     const magneticMenuRef = useMagnetic();
     const location = useLocation();
@@ -19,8 +21,26 @@ export default function Header({ isLoaded }) {
             setScrolled(window.scrollY > 50);
         };
         window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+
+        // Auth Listener
+        supabase.auth.getSession().then(({ data: { session } }) => {
+            setUser(session?.user ?? null);
+        });
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+        });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            subscription.unsubscribe();
+        };
     }, []);
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        setUser(null);
+    };
 
     const navItems = [
         { name: 'Home', path: '/' },
@@ -88,7 +108,21 @@ export default function Header({ isLoaded }) {
                 </div>
 
                 <div className="flex items-center gap-6">
-                    <Link to="/contact" className="hidden md:block text-white text-sm font-semibold hover:text-travel-white transition-colors">Login</Link>
+                    {user ? (
+                        <button
+                            onClick={handleLogout}
+                            className="hidden md:block text-white text-[10px] uppercase tracking-widest font-bold opacity-60 hover:opacity-100 transition-opacity"
+                        >
+                            Sign Out
+                        </button>
+                    ) : (
+                        <Link
+                            to="/login"
+                            className="hidden md:block text-white text-[10px] uppercase tracking-widest font-bold hover:text-travel-white transition-colors"
+                        >
+                            Login
+                        </Link>
+                    )}
 
                     {/* Desktop Buy Now */}
                     <motion.button

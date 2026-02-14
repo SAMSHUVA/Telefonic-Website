@@ -14,6 +14,7 @@ import ContactPage from './components/ContactPage'; // Added ContactPage import
 import JournalPage from './components/JournalPage'; // Added JournalPage import
 import Preloader from './components/Preloader';
 import AdminDashboard from './components/admin/AdminDashboard';
+import AuthPage from './components/AuthPage';
 import { useState } from 'react';
 
 function ScrollToTop() {
@@ -34,13 +35,15 @@ function AppContent() {
 
   const { pathname } = useLocation();
   const isAdminPath = pathname === '/admin';
+  const isAuthPath = pathname === '/login';
+  const hideGlobalUI = isAdminPath || isAuthPath;
 
   return (
     <ReactLenis root options={lenisOptions}>
       <div className="bg-[#0c0c0c] min-h-screen text-white selection:bg-white selection:text-black font-sans relative">
         <div className="fixed inset-0 pointer-events-none noise-overlay z-[99]" />
         {loading && <Preloader onComplete={() => setLoading(false)} />}
-        {!isAdminPath && <Header isLoaded={!loading} />}
+        {!hideGlobalUI && <Header isLoaded={!loading} />}
         <ScrollToTop />
 
         <Routes>
@@ -113,9 +116,10 @@ function AppContent() {
           <Route path="/contact" element={<ContactPage />} /> {/* Changed to ContactPage */}
           <Route path="/support" element={<GenericPage title="Support" subtitle="We're Here to Help" image="/phones/MGF44_AV2.jpg" />} />
           <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/login" element={<AuthPage />} />
         </Routes>
 
-        {!isAdminPath && <Footer />}
+        {!hideGlobalUI && <Footer />}
       </div>
     </ReactLenis>
   )

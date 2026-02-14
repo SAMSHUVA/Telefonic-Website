@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabaseClient';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 /**
  * ReservationForm (Version 4.0)
@@ -13,6 +16,17 @@ export default function ReservationForm({ product, onClose }) {
         image: product?.image_url || "/phones/iphone_17pro__0s6piftg70ym_large.jpg",
         offer: product?.offer_label || ""
     };
+
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkUser = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            setUser(session?.user ?? null);
+        };
+        checkUser();
+    }, []);
 
     const [formData, setFormData] = useState({
         firstName: '',
@@ -86,100 +100,125 @@ export default function ReservationForm({ product, onClose }) {
                     </div>
                 </div>
 
-                {/* Form Fields */}
-                <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-3 md:space-y-6">
-                    <div className="grid grid-cols-2 gap-3 md:gap-4">
-                        <div className="space-y-1 md:space-y-2">
-                            <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">First Name</label>
-                            <input
-                                required
-                                name="firstName"
-                                value={formData.firstName}
-                                onChange={handleChange}
-                                type="text"
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
-                                placeholder="John"
-                            />
+                {/* Content Overlay based on Auth State */}
+                {!user ? (
+                    <div className="p-8 md:p-12 text-center space-y-6">
+                        <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4 border border-white/10">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" className="opacity-60">
+                                <path d="M12 15V17M12 7V13M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
                         </div>
-                        <div className="space-y-1 md:space-y-2">
-                            <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Last Name</label>
-                            <input
-                                required
-                                name="lastName"
-                                value={formData.lastName}
-                                onChange={handleChange}
-                                type="text"
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
-                                placeholder="Doe"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-1 md:space-y-2">
-                        <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Email Address</label>
-                        <input
-                            required
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            type="email"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
-                            placeholder="john@example.com"
-                        />
-                    </div>
-
-                    <div className="space-y-1 md:space-y-2">
-                        <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Phone Number</label>
-                        <input
-                            required
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            type="tel"
-                            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
-                            placeholder="+91 00000 00000"
-                        />
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 md:gap-4">
-                        <div className="space-y-1 md:space-y-2">
-                            <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Quantity</label>
-                            <select
-                                name="quantity"
-                                value={formData.quantity}
-                                onChange={handleChange}
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
-                            >
-                                <option>1 Device</option>
-                                <option>2 Devices</option>
-                                <option>3-5 Devices</option>
-                                <option>Bulk Order (5+)</option>
-                            </select>
-                        </div>
-                        <div className="space-y-1 md:space-y-2">
-                            <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Delivery Target</label>
-                            <input
-                                name="deliveryDate"
-                                value={formData.deliveryDate}
-                                onChange={handleChange}
-                                type="date"
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white/80 focus:outline-none focus:border-white/40 transition-colors"
-                            />
-                        </div>
-                    </div>
-
-                    <div className="pt-2 md:pt-4">
-                        <button
-                            type="submit"
-                            className="w-full py-3 md:py-4 bg-white text-black font-sans font-bold uppercase tracking-widest rounded-lg hover:bg-white/90 active:scale-[0.98] transition-all duration-300 text-sm md:text-base shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-                        >
-                            Confirm Reservation
-                        </button>
-                        <p className="text-center text-white/40 text-[10px] mt-2 md:mt-3 uppercase tracking-wider">
-                            Order finalized via Secure WhatsApp Channel.
+                        <h4 className="font-serif text-2xl text-white">Exclusive Access Only</h4>
+                        <p className="text-white/40 text-sm leading-relaxed max-w-[280px] mx-auto">
+                            To ensure the highest level of service, reservations are reserved for our registered members.
                         </p>
+                        <button
+                            onClick={() => {
+                                onClose();
+                                navigate('/login');
+                            }}
+                            className="w-full py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-travel-accent transition-all"
+                        >
+                            Sign In to Reserve
+                        </button>
+                        <p className="text-[10px] text-white/20 uppercase tracking-widest"> Joining takes less than 30 seconds </p>
                     </div>
-                </form>
+                ) : (
+                    /* Form Fields */
+                    <form onSubmit={handleSubmit} className="p-4 md:p-8 space-y-3 md:space-y-6">
+                        <div className="grid grid-cols-2 gap-3 md:gap-4">
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">First Name</label>
+                                <input
+                                    required
+                                    name="firstName"
+                                    value={formData.firstName}
+                                    onChange={handleChange}
+                                    type="text"
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
+                                    placeholder="John"
+                                />
+                            </div>
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Last Name</label>
+                                <input
+                                    required
+                                    name="lastName"
+                                    value={formData.lastName}
+                                    onChange={handleChange}
+                                    type="text"
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
+                                    placeholder="Doe"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-1 md:space-y-2">
+                            <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Email Address</label>
+                            <input
+                                required
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                type="email"
+                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
+                                placeholder="john@example.com"
+                            />
+                        </div>
+
+                        <div className="space-y-1 md:space-y-2">
+                            <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Phone Number</label>
+                            <input
+                                required
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                type="tel"
+                                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
+                                placeholder="+91 00000 00000"
+                            />
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3 md:gap-4">
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Quantity</label>
+                                <select
+                                    name="quantity"
+                                    value={formData.quantity}
+                                    onChange={handleChange}
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:border-white/40 transition-colors"
+                                >
+                                    <option>1 Device</option>
+                                    <option>2 Devices</option>
+                                    <option>3-5 Devices</option>
+                                    <option>Bulk Order (5+)</option>
+                                </select>
+                            </div>
+                            <div className="space-y-1 md:space-y-2">
+                                <label className="text-[10px] md:text-xs uppercase tracking-widest text-white/60">Delivery Target</label>
+                                <input
+                                    name="deliveryDate"
+                                    value={formData.deliveryDate}
+                                    onChange={handleChange}
+                                    type="date"
+                                    className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white/80 focus:outline-none focus:border-white/40 transition-colors"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="pt-2 md:pt-4">
+                            <button
+                                type="submit"
+                                className="w-full py-3 md:py-4 bg-white text-black font-sans font-bold uppercase tracking-widest rounded-lg hover:bg-white/90 active:scale-[0.98] transition-all duration-300 text-sm md:text-base shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                            >
+                                Confirm Reservation
+                            </button>
+                            <p className="text-center text-white/40 text-[10px] mt-2 md:mt-3 uppercase tracking-wider">
+                                Order finalized via Secure WhatsApp Channel.
+                            </p>
+                        </div>
+                    </form>
+                )}
             </motion.div>
         </motion.div>
     );
