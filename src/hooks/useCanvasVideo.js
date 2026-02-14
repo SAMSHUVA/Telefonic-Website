@@ -1,4 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
+
 
 export function useCanvasVideo(canvasRef, frameCount = 278, options = {}) {
     const {
