@@ -1,0 +1,150 @@
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+
+export default function ContactPage() {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        subject: '',
+        message: ''
+    });
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle submission logic here
+        alert("Thank you for your message. We will be in touch shortly.");
+        setFormData({ name: '', email: '', subject: '', message: '' });
+    };
+
+    const handleChange = (e) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
+
+    return (
+        <section className="min-h-screen bg-[#0c0c0c] text-white pt-32 pb-20 relative overflow-hidden">
+            {/* Background Ambient */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-travel-white/5 rounded-full blur-[120px] pointer-events-none" />
+
+            <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-20">
+
+                {/* Left: Info */}
+                <div className="mt-10">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <p className="font-sans text-travel-white text-sm tracking-[0.3em] uppercase mb-6">
+                            Contact Us
+                        </p>
+                        <h1 className="font-serif text-6xl md:text-8xl mb-8 leading-tight">
+                            Let's start the <br /> conversation.
+                        </h1>
+                        <p className="font-sans text-white/60 text-lg leading-relaxed max-w-md mb-12">
+                            Whether you are inquiring about a pre-order, seeking technical support, or exploring enterprise solutions, our experts are ready to assist you.
+                        </p>
+
+                        <div className="space-y-8 font-sans">
+                            <div>
+                                <h3 className="text-white font-bold uppercase tracking-widest text-xs mb-2">Email</h3>
+                                <p className="text-white/80 text-xl font-light">contact@telefonic.com</p>
+                            </div>
+                            <div>
+                                <h3 className="text-white font-bold uppercase tracking-widest text-xs mb-2">Phone</h3>
+                                <p className="text-white/80 text-xl font-light">+91 96552 06555</p>
+                            </div>
+                            <div>
+                                <h3 className="text-white font-bold uppercase tracking-widest text-xs mb-2">Office</h3>
+                                <div className="space-y-4">
+                                    <p className="text-white/80 text-xl font-light leading-relaxed">
+                                        159/347 TH Road (opp our lady school)<br />
+                                        Kaladipet, Thiruvottiyur,<br />
+                                        Chennai, India 600019
+                                    </p>
+                                    <a
+                                        href="https://maps.app.goo.gl/kn28TEbC4d2ZJic17"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-flex items-center gap-2 text-travel-accent hover:text-white transition-colors text-sm uppercase tracking-widest font-bold"
+                                    >
+                                        <span>View on Maps</span>
+                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+
+                {/* Right: Form */}
+                <div className="bg-white/5 backdrop-blur-sm border border-white/10 p-8 md:p-12 rounded-3xl">
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="space-y-2">
+                                <label className="text-xs uppercase tracking-widest text-white/50">Name</label>
+                                <input
+                                    required
+                                    type="text"
+                                    name="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    className="w-full bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-travel-accent transition-colors"
+                                    placeholder="John Doe"
+                                />
+                            </div>
+                            <div className="space-y-2">
+                                <label className="text-xs uppercase tracking-widest text-white/50">Email</label>
+                                <input
+                                    required
+                                    type="email"
+                                    name="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    className="w-full bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-travel-accent transition-colors"
+                                    placeholder="john@example.com"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs uppercase tracking-widest text-white/50">Subject</label>
+                            <select
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                className="w-full bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-travel-accent transition-colors appearance-none"
+                            >
+                                <option value="" className="bg-black text-white/50">Select a topic</option>
+                                <option value="sales" className="bg-black text-white">Sales Inquiry</option>
+                                <option value="support" className="bg-black text-white">Technical Support</option>
+                                <option value="media" className="bg-black text-white">Media Inquiry</option>
+                                <option value="enterprise" className="bg-black text-white">Enterprise Solutions</option>
+                                <option value="other" className="bg-black text-white">Other</option>
+                            </select>
+                        </div>
+
+                        <div className="space-y-2">
+                            <label className="text-xs uppercase tracking-widest text-white/50">Message</label>
+                            <textarea
+                                required
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                rows="4"
+                                className="w-full bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-travel-accent transition-colors resize-none"
+                                placeholder="How can we help you today?..."
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full bg-white text-black font-sans font-bold uppercase tracking-widest py-4 rounded-full hover:bg-travel-accent transition-colors mt-4"
+                        >
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    );
+}
