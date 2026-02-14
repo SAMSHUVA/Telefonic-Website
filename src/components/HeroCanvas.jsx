@@ -157,10 +157,9 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
 
             {/* Text Layer */}
             <div className="absolute inset-0 pointer-events-none z-10">
-                {/* Text 1: Centered Brand Reveal Removed as per user request */}
 
-                {/* Text 2: Bottom Left */}
-                <div className="absolute inset-0 flex items-end justify-start pb-32 md:pb-32 pl-6 md:pl-20 text-left">
+                {/* Text 2: Bottom Left - Main Headline */}
+                <div className="absolute inset-0 flex items-end justify-start pb-40 md:pb-32 pl-6 md:pl-20 text-left">
                     <div className="overflow-hidden py-2">
                         <div ref={textRef2}>
                             <motion.h1
@@ -186,8 +185,8 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                     </div>
                 </div>
 
-                {/* Text 4: Bottom Right */}
-                <div className="absolute inset-0 flex items-end justify-end pb-20 md:pb-32 pr-6 md:pr-20 text-right">
+                {/* Text 4: Bottom Right - Defined by Excellence */}
+                <div className="absolute inset-0 flex items-end justify-end pb-40 md:pb-32 pr-6 md:pr-20 text-right">
                     <div className="overflow-hidden py-2">
                         <div ref={textRef4} style={{ opacity: 0 }}>
                             <motion.h1
@@ -202,6 +201,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                     </div>
                 </div>
 
+                {/* Text 3: Center - Elegance */}
                 <div className="absolute inset-0 flex items-end justify-center pb-20 md:pb-0 px-4">
                     <div className="overflow-hidden py-4">
                         <div ref={textRef3} style={{ opacity: 0 }}>
@@ -217,8 +217,8 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                     </div>
                 </div>
 
-                {/* Watermark Mask */}
-                <div className="absolute bottom-0 -right-0 md:bottom-0 md:-right-0 z-40 pointer-events-none w-full md:w-auto flex justify-center md:block pb-6 md:pb-0">
+                {/* Watermark Mask - Hidden on mobile to reduce clutter */}
+                <div className="absolute bottom-0 -right-0 md:bottom-0 md:-right-0 z-40 pointer-events-none w-full md:w-auto hidden md:flex justify-center md:block pb-6 md:pb-0">
                     <div className="bg-black/95 backdrop-blur-md px-4 py-2 border-l border-t border-white/10 shadow-2xl rounded-t-xl md:rounded-none">
                         <span className="font-sans text-[0.45rem] md:text-[0.55rem] text-white/50 tracking-[0.4em] uppercase whitespace-nowrap">
                             Est. 2020 — Telefonic Essentials
@@ -229,7 +229,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 {/* Scroll Down Indicator */}
                 <div
                     ref={scrollIndicatorRef}
-                    className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
+                    className="absolute bottom-12 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
                 >
                     <span className="font-sans text-[0.65rem] text-white/80 tracking-[0.2em] md:tracking-[0.5em] uppercase font-medium whitespace-nowrap">
                         <span className="md:hidden">Scroll up to explore</span>
