@@ -54,15 +54,32 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             }
         });
 
-        // FORCE INITIAL DRAW & REFRESH
-        // Mobile browsers often shift layout after load. We force a check.
-        requestAnimationFrame(() => {
+        // FORCE INITIAL DRAW & REFRESH (Robust Mobile Fix)
+        const forceRefresh = () => {
             const st = ScrollTrigger.getById("hero-scroll");
             if (st) {
                 drawFrame(st.progress * 79, getFitMode());
                 ScrollTrigger.refresh();
+            } else {
+                drawFrame(0, getFitMode()); // Fallback if no scroll trigger yet
             }
-        });
+        };
+
+        // Try immediately
+        forceRefresh();
+
+        // Try after a brief delay for UI bar settling
+        const timers = [
+            setTimeout(forceRefresh, 100),
+            setTimeout(forceRefresh, 500)
+        ];
+
+        return () => {
+            timers.forEach(clearTimeout);
+            window.removeEventListener('resize', handleResize);
+            ScrollTrigger.getById("hero-scroll")?.kill();
+            tl.kill();
+        };
 
         // TEXT ANIMATIONS
         // Sync these to the timeline (0 to 1 progress of the container)
@@ -201,7 +218,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 {/* Scroll Down Indicator */}
                 <div
                     ref={scrollIndicatorRef}
-                    className="absolute bottom-24 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
+                    className="absolute bottom-8 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-4 z-20"
                 >
                     <span className="font-sans text-[0.65rem] text-white/80 tracking-[0.2em] md:tracking-[0.5em] uppercase font-medium whitespace-nowrap">
                         <span className="md:hidden">Scroll up to explore</span>
