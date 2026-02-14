@@ -39,8 +39,8 @@ export function useCanvasVideo(canvasRef, frameCount = 278, options = {}) {
         // We use a ref for immediate access in the loop anyway
     }, [frameCount]);
 
-    // Draw function
-    const drawFrame = (index, fitMode = 'cover') => {
+    // Draw function - Memoized to prevent re-renders
+    const drawFrame = useCallback((index, fitMode = 'cover') => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
@@ -50,21 +50,26 @@ export function useCanvasVideo(canvasRef, frameCount = 278, options = {}) {
         });
         if (!context) return;
 
-        // High-DPI Support
+        // High-DPI Support - Calculated efficiently
         const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
 
-        // Only potential resize if dimensions mismatch to avoid clearing unnecessarily if we handle it elsewhere
-        // But for a simple approach, we enforce it here or ensures it matches
-        if (canvas.width !== rect.width * dpr || canvas.height !== rect.height * dpr) {
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
+        // Check if resize is actually needed to avoid layout thrashing
+        // accessing clientWidth/Height is cheaper than getBoundingClientRect
+        const rectWidth = canvas.clientWidth;
+        const rectHeight = canvas.clientHeight;
+
+        const targetWidth = Math.floor(rectWidth * dpr);
+        const targetHeight = Math.floor(rectHeight * dpr);
+
+        if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+            canvas.width = targetWidth;
+            canvas.height = targetHeight;
             context.scale(dpr, dpr);
         }
 
         // Logical width/height for calculations (CSS pixels)
-        const width = rect.width;
-        const height = rect.height;
+        const width = rectWidth;
+        const height = rectHeight;
 
         const imgIndex = Math.min(frameCount - 1, Math.max(0, Math.round(index)));
         const img = savedImages.current[imgIndex];
@@ -106,7 +111,7 @@ export function useCanvasVideo(canvasRef, frameCount = 278, options = {}) {
 
         context.clearRect(0, 0, width, height);
         context.drawImage(img, x, y, newW, newH);
-    };
+    }, [frameCount, canvasRef]); // Dependencies
 
     return {
         progress: (loadedCount / frameCount) * 100,

@@ -54,6 +54,16 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             }
         });
 
+        // FORCE INITIAL DRAW & REFRESH
+        // Mobile browsers often shift layout after load. We force a check.
+        requestAnimationFrame(() => {
+            const st = ScrollTrigger.getById("hero-scroll");
+            if (st) {
+                drawFrame(st.progress * 79, getFitMode());
+                ScrollTrigger.refresh();
+            }
+        });
+
         // TEXT ANIMATIONS
         // Sync these to the timeline (0 to 1 progress of the container)
 
