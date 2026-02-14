@@ -127,7 +127,7 @@ export default function AuthPage() {
                 <div className="w-full">
                     <button
                         onClick={() => handleSocialLogin('google')}
-                        className="w-full flex items-center justify-center gap-3 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all"
+                        className="w-full flex items-center justify-center gap-3 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl transition-all mb-4"
                     >
                         <svg className="w-4 h-4" viewBox="0 0 24 24">
                             <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -137,6 +137,11 @@ export default function AuthPage() {
                         </svg>
                         <span className="text-[10px] font-bold text-white uppercase">Continue with Google</span>
                     </button>
+
+                    <p className="text-[9px] text-white/30 text-center leading-relaxed px-4">
+                        Your privacy is our priority. We use your data securely and promise <span className="text-white/50 font-bold">zero spam</span>.
+                        By signing in, you agree to our Terms & Data Policy.
+                    </p>
                 </div>
 
                 <div className="mt-8 text-center">
