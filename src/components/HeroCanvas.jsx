@@ -23,14 +23,41 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
         usePadding: false
     });
 
+    // EFFECT 1: INITIAL DRAW (Runs immediately and repeatedly during load)
+    // This ensures that as soon as the first image is ready, it hits the canvas.
+    // Prevents "Black Screen" while waiting for the rest of the 200+ frames.
     useEffect(() => {
-        if (isLoading || !isLoaded) return; // Wait for both assets and preloader
+        let frameRequest;
 
-        // Initial draw
+        const drawInitial = () => {
+            const fitMode = window.innerWidth < 768 ? 'contain' : 'cover';
+            drawFrame(0, fitMode);
+        };
+
+        // Try immediately
+        drawInitial();
+
+        // If loading, keep retrying every 100ms to catch the first loaded frame
+        const interval = setInterval(drawInitial, 100);
+
+        // Also hook into resize
+        window.addEventListener('resize', drawInitial);
+
+        return () => {
+            clearInterval(interval);
+            window.removeEventListener('resize', drawInitial);
+            cancelAnimationFrame(frameRequest);
+        };
+    }, [drawFrame]); // Intentionally minimal dependencies
+
+    // EFFECT 2: SCROLL ANIMATION (Runs only when fully loaded)
+    useEffect(() => {
+        if (isLoading || !isLoaded) return;
+
+        // Initial draw for safety
         const getFitMode = () => window.innerWidth < 768 ? 'contain' : 'cover';
         drawFrame(0, getFitMode());
 
-        // Resize handler
         const handleResize = () => {
             const st = ScrollTrigger.getById("hero-scroll");
             if (st) drawFrame(st.progress * 79, getFitMode());
@@ -61,14 +88,10 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 drawFrame(st.progress * 79, getFitMode());
                 ScrollTrigger.refresh();
             } else {
-                drawFrame(0, getFitMode()); // Fallback if no scroll trigger yet
+                drawFrame(0, getFitMode());
             }
         };
 
-        // Try immediately
-        forceRefresh();
-
-        // Try after a brief delay for UI bar settling
         const timers = [
             setTimeout(forceRefresh, 100),
             setTimeout(forceRefresh, 500)
@@ -83,7 +106,6 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
 
         // TEXT ANIMATIONS
         // Sync these to the timeline (0 to 1 progress of the container)
-
         // Scene 0: Scroll Down Indicator (0% - 10%)
         tl.to(scrollIndicatorRef.current, {
             opacity: 0,
@@ -91,9 +113,6 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             duration: 0.05,
             ease: "power2.in"
         }, 0);
-
-        // Scene 1: Initial State (0% - 25%)
-        // textRef1 removed as per user request
 
         // Scene 2: FINANCING PLANS (30% - 60%)
         tl.fromTo(textRef2.current,
@@ -118,21 +137,13 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             { opacity: 0, scale: 0.9, y: 50 },
             { opacity: 1, scale: 1, y: 0, ease: 'power2.out', duration: 0.1 }, 0.8
         );
-        // It stays visible until the end, then scrolls away naturally with the sticky container
 
-        return () => {
-            window.removeEventListener('resize', handleResize);
-            ScrollTrigger.getById("hero-scroll")?.kill();
-            tl.kill();
-        };
+    }, [isLoading, isLoaded, drawFrame, scrollTrackRef]);
 
-    }, [isLoading, drawFrame, scrollTrackRef]);
-
-    // We allow the Preloader component in App.jsx to handle the main loading screen
-    // but we still wait for assets here
-    if (isLoading && !isLoaded) {
-        return <div className="fixed inset-0 bg-[#0c0c0c] z-50 transition-opacity duration-1000" />;
-    }
+    // PRELOADER HANDLING replaced with direct render
+    // We allow the canvas to exist (opacity 0 or visible) behind the preloader
+    // But we still overlay the black screen if strictly needed, or let App.jsx handle it.
+    // Removing the early return block allows the canvas JSX below to render!
 
     return (
         <div className="relative w-full h-full bg-black">
@@ -149,7 +160,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 {/* Text 1: Centered Brand Reveal Removed as per user request */}
 
                 {/* Text 2: Bottom Left */}
-                <div className="absolute inset-0 flex items-end justify-start pb-20 md:pb-32 pl-6 md:pl-20 text-left">
+                <div className="absolute inset-0 flex items-end justify-start pb-32 md:pb-32 pl-6 md:pl-20 text-left">
                     <div className="overflow-hidden py-2">
                         <div ref={textRef2}>
                             <motion.h1
