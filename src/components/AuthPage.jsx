@@ -31,7 +31,7 @@ export default function AuthPage() {
                 if (error) throw error;
                 navigate(-1); // Go back to where they were
             } else {
-                const { error } = await supabase.auth.signUp({
+                const { data, error } = await supabase.auth.signUp({
                     email,
                     password,
                     options: {
@@ -39,7 +39,12 @@ export default function AuthPage() {
                     }
                 });
                 if (error) throw error;
-                setMessage('Check your email for the confirmation link!');
+
+                if (data?.session) {
+                    navigate('/');
+                } else {
+                    setMessage('Check your email for the confirmation link!');
+                }
             }
         } catch (error) {
             setMessage(error.message);

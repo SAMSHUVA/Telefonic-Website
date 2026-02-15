@@ -199,7 +199,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 </div>
 
                 {/* Text 3: Center - Elegance */}
-                <div className="absolute inset-x-0 bottom-0 flex items-end justify-center pb-20 md:pb-0 px-4 overflow-x-clip w-full">
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-center pb-15 md:pb-0 px-4 overflow-x-clip w-full">
                     <div className="overflow-hidden py-4 max-w-[90vw] md:max-w-full">
                         <div ref={textRef3} style={{ opacity: 0 }}>
                             <motion.h1
