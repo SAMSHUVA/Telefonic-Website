@@ -24,37 +24,29 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
     });
 
     // EFFECT 1: INITIAL DRAW (Runs immediately and repeatedly during load)
-    // This ensures that as soon as the first image is ready, it hits the canvas.
-    // Prevents "Black Screen" while waiting for the rest of the 200+ frames.
+    // Stops immediately once isLoaded is true to prevent conflict with ScrollTrigger.
     useEffect(() => {
-        let frameRequest;
+        if (isLoaded) return;
 
         const drawInitial = () => {
             const fitMode = window.innerWidth < 768 ? 'contain' : 'cover';
             drawFrame(0, fitMode);
         };
 
-        // Try immediately
         drawInitial();
-
-        // If loading, keep retrying every 100ms to catch the first loaded frame
         const interval = setInterval(drawInitial, 100);
-
-        // Also hook into resize
         window.addEventListener('resize', drawInitial);
 
         return () => {
             clearInterval(interval);
             window.removeEventListener('resize', drawInitial);
-            cancelAnimationFrame(frameRequest);
         };
-    }, [drawFrame]); // Intentionally minimal dependencies
+    }, [drawFrame, isLoaded]);
 
     // EFFECT 2: SCROLL ANIMATION (Runs only when fully loaded)
     useEffect(() => {
         if (isLoading || !isLoaded) return;
 
-        // Initial draw for safety
         const getFitMode = () => window.innerWidth < 768 ? 'contain' : 'cover';
         drawFrame(0, getFitMode());
 
@@ -64,8 +56,13 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
         };
         window.addEventListener('resize', handleResize);
 
-        // Guard against null refs
-        if (!textRef2.current || !scrollIndicatorRef.current) return;
+        // Guard against null refs before creating timeline and animations
+        if (!textRef2.current || !scrollIndicatorRef.current || !textRef3.current || !textRef4.current) {
+            // If refs are not ready, we still need to clean up the resize listener
+            return () => {
+                window.removeEventListener('resize', handleResize);
+            };
+        }
 
         const tl = gsap.timeline({
             scrollTrigger: {
@@ -81,7 +78,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             }
         });
 
-        // FORCE INITIAL DRAW & REFRESH (Robust Mobile Fix)
+        // FORCE INITIAL DRAW & REFRESH
         const forceRefresh = () => {
             const st = ScrollTrigger.getById("hero-scroll");
             if (st) {
@@ -92,17 +89,11 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             }
         };
 
+        forceRefresh();
         const timers = [
             setTimeout(forceRefresh, 100),
             setTimeout(forceRefresh, 500)
         ];
-
-        return () => {
-            timers.forEach(clearTimeout);
-            window.removeEventListener('resize', handleResize);
-            ScrollTrigger.getById("hero-scroll")?.kill();
-            tl.kill();
-        };
 
         // TEXT ANIMATIONS
         // Sync these to the timeline (0 to 1 progress of the container)
@@ -138,6 +129,12 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             { opacity: 1, scale: 1, y: 0, ease: 'power2.out', duration: 0.1 }, 0.8
         );
 
+        return () => {
+            timers.forEach(clearTimeout);
+            window.removeEventListener('resize', handleResize);
+            ScrollTrigger.getById("hero-scroll")?.kill();
+            tl.kill();
+        };
     }, [isLoading, isLoaded, drawFrame, scrollTrackRef]);
 
     // PRELOADER HANDLING replaced with direct render
@@ -217,8 +214,8 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                     </div>
                 </div>
 
-                {/* Watermark Mask - Hidden on mobile to reduce clutter */}
-                <div className="absolute bottom-0 -right-0 md:bottom-0 md:-right-0 z-40 pointer-events-none w-full md:w-auto hidden md:flex justify-center md:block pb-6 md:pb-0">
+                {/* Watermark Mask */}
+                <div className="absolute bottom-0 -right-0 md:bottom-0 md:-right-0 z-40 pointer-events-none w-full md:w-auto flex justify-center md:block pb-6 md:pb-0">
                     <div className="bg-black/95 backdrop-blur-md px-4 py-2 border-l border-t border-white/10 shadow-2xl rounded-t-xl md:rounded-none">
                         <span className="font-sans text-[0.45rem] md:text-[0.55rem] text-white/50 tracking-[0.4em] uppercase whitespace-nowrap">
                             Est. 2020 — Telefonic Essentials

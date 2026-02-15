@@ -86,33 +86,32 @@ export function useCanvasVideo(canvasRef, frameCount = 278, options = {}) {
         // Use Math.max for cover, Math.min for contain
         let ratio = fitMode === 'contain' ? Math.min(rW, rH) : Math.max(rW, rH);
 
-        // MANUALLY INCREASE SIZE HERE:
+        // MANUALLY INCREASE SIZE FOR MOBILE IMMERSION:
         let heightStretch = 1;
         if (window.innerWidth < 768) {
-            ratio = ratio * 1.75; // Zoom (Width)
+            ratio = ratio * 1.75; // Increase width significantly to hide black bars/edges
 
             // DYNAMIC HEIGHT STRETCH:
-            // Keeps Logo (frames 0-30) perfect. Stretches later frames for immersion.
+            // Keeps Logo (frames 0-30) clean. Stretches later frames for immersion.
             const stretchStart = 30;
-            const maxStretch = 1.05; // Decreased from 1.5 - Change this to tweak intensity
-
+            const maxStretch = 1.05; // Tweak this if it feels too stretched
             if (index > stretchStart) {
-                const progress = Math.min(1, (index - stretchStart) / 60); // Ramp up stretch over 60 frames
+                const progress = Math.min(1, (index - stretchStart) / 60);
                 heightStretch = 1 + (progress * (maxStretch - 1));
             }
         }
 
-        const newW = vW * ratio;
-        const newH = vH * ratio * heightStretch;
-        const x = (width - newW) / 2;
-        const y = (height - newH) / 2;
+        const nW = vW * ratio;
+        const nH = vH * ratio * heightStretch;
+        const nX = (width - nW) / 2;
+        const nY = (height - nH) / 2;
 
         context.imageSmoothingEnabled = true;
         context.imageSmoothingQuality = 'high';
 
         context.clearRect(0, 0, width, height);
-        context.drawImage(img, x, y, newW, newH);
-    }, [frameCount, canvasRef]); // Dependencies
+        context.drawImage(img, nX, nY, nW, nH);
+    }, [frameCount]); // Dependencies
 
     return {
         progress: (loadedCount / frameCount) * 100,
