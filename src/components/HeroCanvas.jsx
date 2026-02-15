@@ -158,7 +158,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 {/* Text 2: Bottom Left - Main Headline */}
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-start pb-40 md:pb-32 pl-6 md:pl-20 text-left overflow-x-clip w-full">
                     <div className="overflow-hidden py-2 max-w-[90vw] md:max-w-full">
-                        <div ref={textRef2}>
+                        <div ref={textRef2} style={{ opacity: 0 }}>
                             <motion.h1
                                 initial={{ y: "110%" }}
                                 animate={isLoaded ? { y: 0 } : { y: "110%" }}
