@@ -21,6 +21,15 @@ export default function Preloader({ onComplete }) {
     }, []);
 
     const brand = "TELEFONIC";
+    const loadingMessages = [
+        "Initializing Excellence",
+        "Calibrating Collection",
+        "Optimizing Experience",
+        "Synchronizing Essentials",
+        "Await Perfection"
+    ];
+
+    const currentMessage = loadingMessages[Math.min(Math.floor(counter / 20), loadingMessages.length - 1)];
 
     return (
         <motion.div
@@ -56,7 +65,7 @@ export default function Preloader({ onComplete }) {
             </div>
 
             <div className="absolute bottom-12 right-1/2 translate-x-1/2 md:translate-x-0 md:right-12 flex flex-col items-center md:items-end w-full md:w-auto">
-                <span className="font-sans text-[10px] tracking-[0.5em] text-white/30 mb-2 uppercase">System Preflight</span>
+                <span className="font-sans text-[10px] tracking-[0.5em] text-white/30 mb-2 uppercase">{currentMessage}</span>
                 <span className="font-serif text-3xl md:text-6xl text-white/10 tabular-nums">
                     {counter.toString().padStart(3, '0')}%
                 </span>
