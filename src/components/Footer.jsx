@@ -63,8 +63,8 @@ export default function Footer() {
                 <div className="flex flex-col md:flex-row justify-between items-center mt-10 text-[10px] text-white/40 font-sans uppercase tracking-widest">
                     <p>© 2026 Telefonic Essentials. All rights reserved.</p>
                     <div className="flex gap-8 mt-4 md:mt-0">
-                        <span className="cursor-pointer hover:text-white">Privacy Policy</span>
-                        <span className="cursor-pointer hover:text-white">Terms</span>
+                        <Link to="/privacy" className="cursor-pointer hover:text-white transition-colors">Privacy Policy</Link>
+                        <Link to="/terms" className="cursor-pointer hover:text-white transition-colors">Terms</Link>
                         <span className="cursor-pointer hover:text-white">Sitemap</span>
                     </div>
                 </div>

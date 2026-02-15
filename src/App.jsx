@@ -15,6 +15,7 @@ import JournalPage from './components/JournalPage'; // Added JournalPage import
 import Preloader from './components/Preloader';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AuthPage from './components/AuthPage';
+import LegalPage from './components/LegalPage';
 import { useState } from 'react';
 
 function ScrollToTop() {
@@ -129,6 +130,64 @@ function AppContent() {
           <Route path="/support" element={<GenericPage title="Support" subtitle="We're Here to Help" image="/phones/MGF44_AV2.jpg" />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<AuthPage />} />
+          <Route path="/privacy" element={
+            <LegalPage
+              title="Privacy Policy"
+              lastUpdated="February 15, 2026"
+              sections={[
+                {
+                  title: "Information We Collect",
+                  content: [
+                    "We collect information that you provide directly to us, such as when you create an account, make a purchase, or contact our support team. This may include your name, email address, and payment information.",
+                    "We also automatically collect certain information when you visit our website, including your IP address, browser type, and how you interact with our content."
+                  ]
+                },
+                {
+                  title: "How We Use Your Information",
+                  content: [
+                    "We use the information we collect to provide and improve our services, process your transactions, and communicate with you about your account.",
+                    "We may also use your information to personalize your experience and send you marketing communications that we believe may be of interest to you."
+                  ]
+                },
+                {
+                  title: "Data Security",
+                  content: [
+                    "We take the security of your data seriously and implement industry-standard measures to protect it from unauthorized access, disclosure, or alteration.",
+                    "However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security."
+                  ]
+                }
+              ]}
+            />
+          } />
+          <Route path="/terms" element={
+            <LegalPage
+              title="Terms of Service"
+              lastUpdated="February 15, 2026"
+              sections={[
+                {
+                  title: "Acceptance of Terms",
+                  content: [
+                    "By accessing or using our website, you agree to be bound by these Terms of Service and all applicable laws and regulations.",
+                    "If you do not agree with any of these terms, you are prohibited from using or accessing this site."
+                  ]
+                },
+                {
+                  title: "User Responsibilities",
+                  content: [
+                    "You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.",
+                    "You agree to use our services only for lawful purposes and in accordance with these terms."
+                  ]
+                },
+                {
+                  title: "Intellectual Property",
+                  content: [
+                    "All content on this website, including text, graphics, logos, and images, is the property of Telefonic Essentials and is protected by intellectual property laws.",
+                    "You may not reproduce, distribute, or modify any content from this site without our prior written consent."
+                  ]
+                }
+              ]}
+            />
+          } />
         </Routes>
 
         {!hideGlobalUI && <Footer />}
