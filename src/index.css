@@ -5,11 +5,38 @@
   --text-color: #ffffff;
 }
 
+html,
+body {
+  overflow-x: clip !important;
+  width: 100% !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: 'Inter', sans-serif;
-  overflow-x: hidden;
+  min-height: 100vh;
+  overflow-y: visible !important;
+}
+
+/* Force unlock any persistent scroll lock classes and ensure sticky support */
+#root,
+main {
+  overflow: visible !important;
+}
+
+.antigravity-scroll-lock {
+  overflow: visible !important;
+  overflow-x: clip !important;
+}
+
+h1,
+h2,
+h3 {
+  word-break: break-word;
 }
 
 /* Custom Utilities for Liquid Glass */

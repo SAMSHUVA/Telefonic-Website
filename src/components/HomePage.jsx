@@ -21,7 +21,7 @@ export default function HomePage({ isLoaded }) {
       */}
             <div ref={containerRef} className="relative h-[300vh]">
                 <div
-                    className="sticky top-0 h-screen w-full overflow-hidden"
+                    className="sticky top-0 h-screen w-full max-w-full"
                     style={{ paddingTop: `${HERO_OFFSET}px` }}
                 >
                     {/* Pass the container ref so HeroCanvas can use it as a trigger if needed, 

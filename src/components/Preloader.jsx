@@ -27,7 +27,12 @@ export default function Preloader({ onComplete }) {
             initial={{ opacity: 1 }}
             animate={isExiting ? { y: "-100%" } : { opacity: 1 }}
             transition={{ duration: 1, ease: [0.85, 0, 0.15, 1], delay: 0.5 }}
-            onAnimationComplete={() => isExiting && onComplete()}
+            onAnimationComplete={() => {
+                if (isExiting) {
+                    document.body.classList.remove('antigravity-scroll-lock');
+                    onComplete();
+                }
+            }}
             className="fixed inset-0 z-[100] bg-[#0c0c0c] flex flex-col items-center justify-center pointer-events-auto"
         >
             <div className="relative overflow-hidden mb-8">

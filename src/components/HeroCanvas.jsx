@@ -156,8 +156,8 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
             <div className="absolute inset-0 pointer-events-none z-10">
 
                 {/* Text 2: Bottom Left - Main Headline */}
-                <div className="absolute inset-0 flex items-end justify-start pb-40 md:pb-32 pl-6 md:pl-20 text-left">
-                    <div className="overflow-hidden py-2">
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-start pb-40 md:pb-32 pl-6 md:pl-20 text-left overflow-x-clip w-full">
+                    <div className="overflow-hidden py-2 max-w-[90vw] md:max-w-full">
                         <div ref={textRef2}>
                             <motion.h1
                                 initial={{ y: "110%" }}
@@ -183,8 +183,8 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 </div>
 
                 {/* Text 4: Bottom Right - Defined by Excellence */}
-                <div className="absolute inset-0 flex items-end justify-end pb-40 md:pb-32 pr-6 md:pr-20 text-right">
-                    <div className="overflow-hidden py-2">
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-end pb-40 md:pb-32 pr-6 md:pr-20 text-right overflow-x-clip w-full">
+                    <div className="overflow-hidden py-2 max-w-[90vw] md:max-w-full">
                         <div ref={textRef4} style={{ opacity: 0 }}>
                             <motion.h1
                                 initial={{ y: "110%" }}
@@ -199,8 +199,8 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 </div>
 
                 {/* Text 3: Center - Elegance */}
-                <div className="absolute inset-0 flex items-end justify-center pb-20 md:pb-0 px-4">
-                    <div className="overflow-hidden py-4">
+                <div className="absolute inset-x-0 bottom-0 flex items-end justify-center pb-20 md:pb-0 px-4 overflow-x-clip w-full">
+                    <div className="overflow-hidden py-4 max-w-[90vw] md:max-w-full">
                         <div ref={textRef3} style={{ opacity: 0 }}>
                             <motion.h1
                                 initial={{ y: "110%" }}
@@ -215,7 +215,7 @@ export default function HeroCanvas({ scrollTrackRef, isLoaded }) {
                 </div>
 
                 {/* Watermark Mask */}
-                <div className="absolute bottom-0 -right-0 md:bottom-0 md:-right-0 z-40 pointer-events-none w-full md:w-auto flex justify-center md:block pb-6 md:pb-0">
+                <div className="absolute bottom-0 right-0 md:bottom-0 md:right-0 z-40 pointer-events-none w-full md:w-auto flex justify-center md:block pb-6 md:pb-0">
                     <div className="bg-black/95 backdrop-blur-md px-4 py-2 border-l border-t border-white/10 shadow-2xl rounded-t-xl md:rounded-none">
                         <span className="font-sans text-[0.45rem] md:text-[0.55rem] text-white/50 tracking-[0.4em] uppercase whitespace-nowrap">
                             Est. 2020 — Telefonic Essentials

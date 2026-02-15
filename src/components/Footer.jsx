@@ -54,7 +54,7 @@ export default function Footer() {
 
                 {/* BIG FOOTER TEXT */}
                 <div className="w-full overflow-hidden border-t border-white/10 pt-20 pb-8 flex flex-col items-center">
-                    <h1 className="font-serif text-[clamp(2rem,7.5vw,12rem)] leading-none text-center tracking-tighter text-white opacity-90 select-none uppercase whitespace-nowrap px-4">
+                    <h1 className="font-serif text-[clamp(1.5rem,6vw,12rem)] leading-none text-center tracking-tighter text-white opacity-90 select-none uppercase px-4 break-words">
                         TELEFONIC ESSENTIALS
                     </h1>
                 </div>

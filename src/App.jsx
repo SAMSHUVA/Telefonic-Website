@@ -38,6 +38,18 @@ function AppContent() {
   const isAuthPath = pathname === '/login';
   const hideGlobalUI = isAdminPath || isAuthPath;
 
+  // Ensure any persistent scroll lock is removed when loading finished
+  useEffect(() => {
+    if (!loading) {
+      document.body.classList.remove('antigravity-scroll-lock');
+      document.body.style.overflow = 'visible';
+      document.body.style.overflowX = 'clip';
+      document.body.style.width = '100%';
+      document.body.style.margin = '0';
+      document.body.style.padding = '0';
+    }
+  }, [loading]);
+
   return (
     <ReactLenis root options={lenisOptions}>
       <div className="bg-[#0c0c0c] min-h-screen text-white selection:bg-white selection:text-black font-sans relative">
