@@ -16,6 +16,7 @@ import Preloader from './components/Preloader';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AuthPage from './components/AuthPage';
 import LegalPage from './components/LegalPage';
+import SupportPage from './components/SupportPage';
 import { useState } from 'react';
 
 function ScrollToTop() {
@@ -127,7 +128,7 @@ function AppContent() {
             />
           } />
           <Route path="/contact" element={<ContactPage />} /> {/* Changed to ContactPage */}
-          <Route path="/support" element={<GenericPage title="Support" subtitle="We're Here to Help" image="/phones/MGF44_AV2.jpg" />} />
+          <Route path="/support" element={<SupportPage />} />
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/login" element={<AuthPage />} />
           <Route path="/privacy" element={
