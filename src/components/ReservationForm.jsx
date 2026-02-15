@@ -85,6 +85,7 @@ export default function ReservationForm({ product, onClose }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#111] to-transparent" />
                     <button
                         onClick={onClose}
+                        aria-label="Close Reservation Form"
                         className="absolute top-3 right-3 md:top-4 md:right-4 w-8 h-8 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/20 transition-colors z-10"
                     >
                         ✕
@@ -117,6 +118,7 @@ export default function ReservationForm({ product, onClose }) {
                                 onClose();
                                 navigate('/login');
                             }}
+                            aria-label="Sign In to Reserve"
                             className="w-full py-4 bg-white text-black font-bold uppercase tracking-widest text-xs rounded-xl hover:bg-travel-accent transition-all"
                         >
                             Sign In to Reserve

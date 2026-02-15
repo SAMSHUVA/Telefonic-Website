@@ -1,9 +1,10 @@
 # Telefonic Essentials | Luxury E-Commerce Platform
 
-[![version](https://img.shields.io/badge/version-7.0.0-blue.svg)](https://github.com/SAMSHUVA/Telefonic-Website)
-[![React](https://img.shields.io/badge/React-18.0-61DAFB.svg)](https://reactjs.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.0-646CFF.svg)](https://vitejs.dev/)
-[![Tailwind](https://img.shields.io/badge/Tailwind-3.4-38B2AC.svg)](https://tailwindcss.com/)
+[![version](https://img.shields.io/badge/version-7.5.0-blue.svg)](https://github.com/SAMSHUVA/Telefonic-Website)
+[![Performance](https://img.shields.io/badge/Performance-89%2F100-yellow.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
+[![Accessibility](https://img.shields.io/badge/Accessibility-76%2F100-orange.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
+[![Best Practices](https://img.shields.io/badge/Best_Practices-100%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
+[![SEO](https://img.shields.io/badge/SEO-92%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
 
 **Telefonic Essentials** is a premium, high-fidelity e-commerce platform curated for elite technology and luxury lifestyle products. Designed with a "Digital First" mentality, it blends high-performance animations with a robust administrative backbone.
 
@@ -21,15 +22,15 @@
 
 ---
 
-## 🚀 What's New (v7.0)
+## 🚀 What's New (v7.5)
 
 | Feature | Description |
 | :--- | :--- |
-| **New Support Hub** | Fully custom support page with specific "Track Order" and "Reliability" modules. |
-| **Premium Preloader** | Luxury-aligned loading sequences replacing technical jargon with brand-centric messages. |
-| **Vercel Optimization** | Cleaned up tracking and removed legacy Netlify configuration for better deployment performance. |
-| **Security Hardened** | Environment variables are now secured and no longer tracked in public version control. |
-| **WhatsApp v2.0** | All contact CTAs standardized to the dedicated business support line (+91 96552 06555). |
+| **Performance Overhaul** | Implemented **Safe Video Posters** in BentoGrid, cutting mobile payload by utilizing native browser pre-loading attributes. |
+| **Accessibility Hardened** | Integrated `aria-labels` across Header, Mobile Menu, and Reservation forms for improved screen reader compliance. |
+| **Crawlability Fix** | Optimized `robots.txt` to resolve 45+ search engine indexing errors detected in diagnostic audits. |
+| **Code Hygiene** | Removed redundant `GenericPage` architecture and unused routes to streamline the production bundle. |
+| **Secure WhatsApp v2.0** | All contact CTAs standardized to the dedicated business support line (+91 96552 06555). |
 
 ---
 

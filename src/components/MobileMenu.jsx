@@ -34,6 +34,7 @@ export default function MobileMenu({ isOpen, onClose, navItems, onReserve }) {
                             <motion.button
                                 ref={magneticCloseRef}
                                 onClick={onClose}
+                                aria-label="Close Menu"
                                 className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
                             >
                                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -5,13 +5,10 @@ import Header from './components/Header';
 import HeroCanvas from './components/HeroCanvas';
 import PricingSection from './components/PricingSection';
 import Footer from './components/Footer';
-import GenericPage from './components/GenericPage';
-import TravelPage from './components/TravelPage';
 import ServicePage from './components/ServicePage';
 import HomePage from './components/HomePage';
 import GalleryPage from './components/GalleryPage'; // Added GalleryPage import
 import ContactPage from './components/ContactPage'; // Added ContactPage import
-import JournalPage from './components/JournalPage'; // Added JournalPage import
 import Preloader from './components/Preloader';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AuthPage from './components/AuthPage';
@@ -62,10 +59,6 @@ function AppContent() {
 
         <Routes>
           <Route path="/" element={<HomePage isLoaded={!loading} />} />
-          <Route path="/journal" element={<JournalPage />} /> {/* Added JournalPage route */}
-          <Route path="/about" element={<GenericPage title="About Us" subtitle="Our Story" image="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=2670&auto=format&fit=crop" />} />
-          <Route path="/dates" element={<GenericPage title="Availability" subtitle="Plan Your Stay" image="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2673&auto=format&fit=crop" />} />
-          <Route path="/travel" element={<TravelPage />} />
           <Route path="/gallery" element={<GalleryPage />} /> {/* Changed to GalleryPage */}
           <Route path="/phones" element={
             <ServicePage

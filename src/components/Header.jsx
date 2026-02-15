@@ -137,6 +137,7 @@ export default function Header({ isLoaded }) {
                     <motion.button
                         ref={magneticMenuRef}
                         onClick={() => setMobileMenuOpen(true)}
+                        aria-label="Open Menu"
                         className="md:hidden w-10 h-10 flex flex-col justify-center items-center gap-1.5"
                     >
                         <span className="w-6 h-px bg-white block"></span>

@@ -32,6 +32,7 @@ const Card = ({ card, index }) => {
                     loop
                     muted
                     playsInline
+                    poster={card.posterPath}
                     className={`h-full w-full object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105 ${isPenthouse ? 'opacity-80' : ''}`}
                     src={card.videoPath}
                 />
