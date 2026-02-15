@@ -1,10 +1,10 @@
 # Telefonic Essentials | Luxury E-Commerce Platform
 
 [![version](https://img.shields.io/badge/version-7.5.0-blue.svg)](https://github.com/SAMSHUVA/Telefonic-Website)
-[![Performance](https://img.shields.io/badge/Performance-89%2F100-yellow.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
-[![Accessibility](https://img.shields.io/badge/Accessibility-76%2F100-orange.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
+[![Performance](https://img.shields.io/badge/Performance-93%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
+[![Accessibility](https://img.shields.io/badge/Accessibility-93%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
 [![Best Practices](https://img.shields.io/badge/Best_Practices-100%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
-[![SEO](https://img.shields.io/badge/SEO-92%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
+[![SEO](https://img.shields.io/badge/SEO-100%2F100-brightgreen.svg)](https://pagespeed.web.dev/analysis/https-telefonic-website-vercel-app/tljqxzjx1s?form_factor=mobile)
 
 **Telefonic Essentials** is a premium, high-fidelity e-commerce platform curated for elite technology and luxury lifestyle products. Designed with a "Digital First" mentality, it blends high-performance animations with a robust administrative backbone.
 
